@@ -119,6 +119,12 @@ config QUALCOMM
 		help
 		  Say Y if your device uses Samsung Exynos990 SoC
 
+	config EXYNOS_GOOGLE_ZUMA
+		bool "Support for Google Tensor G4"
+		select EXYNOS
+		help
+		  Say Y if your device uses Google Tensor G4 SoC
+
 	config HI6250
 		bool "Support for HiSilicon Hi6250"
 		select HISILICON

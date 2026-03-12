@@ -21,6 +21,58 @@ menu "Device Support"
 		help
 		  Say Y if you want to include support for Pixel 2 XL
 
+	choice GOOGLE_SHUSKY_CAIMITO
+		prompt "Support for Pixel 8/9 series"
+		depends on EXYNOS_GOOGLE_ZUMA
+		default GOOGLE_KOMODO
+
+	config GOOGLE_KOMODO
+		bool "Support for Google Pixel 9 Pro XL"
+		help
+		  Say Y if you want to include support for Pixel 9 Pro XL
+
+	config GOOGLE_CAIMAN
+		bool "Support for Google Pixel 9 Pro"
+		help
+		  Say Y if you want to include support for Pixel 9 Pro
+
+	config GOOGLE_TOKAY
+		bool "Support for Google Pixel 9"
+		help
+		  Say Y if you want to include support for Pixel 9
+
+	config GOOGLE_TEGU
+		bool "Support for Google Pixel 9a"
+		help
+		  Say Y if you want to include support for Pixel 9a
+
+	config GOOGLE_COMET
+		bool "Support for Google Pixel 9 Pro Fold"
+		help
+		  Say Y if you want to include support for Pixel 9 Pro Fold
+
+	config GOOGLE_HUSKY
+		bool "Support for Google Pixel 8 Pro"
+		help
+		  Say Y if you want to include support for Pixel 8 Pro
+
+	config GOOGLE_SHIBA
+		bool "Support for Google Pixel 8"
+		help
+		  Say Y if you want to include support for Pixel 8
+
+	config GOOGLE_AKITA
+		bool "Support for Google Pixel 8a"
+		help
+		  Say Y if you want to include support for Pixel 8a
+
+	config GOOGLE_FELIX
+		bool "Support for Google Pixel Fold"
+		help
+		  Say Y if you want to include support for Pixel Fold
+
+	endchoice
+
 	config HUAWEI_AGASSI2
 		bool "Support for Huawei Mediapad T5"
 		default n
