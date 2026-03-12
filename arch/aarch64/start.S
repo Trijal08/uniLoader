@@ -5,22 +5,45 @@
 #include "asmdefs.h"
 
 .section .text
+
 #ifdef CONFIG_LINUX_KRNL_HEADER_IMG
+	/*
+	 * Emit a 64-bit absolute little endian symbol reference in a way that
+	 * ensures that it will be resolved at build time, even when building a
+	 * PIE binary. This requires cooperation from the linker script, which
+	 * must emit the lo32/hi32 halves individually.
+	 */
+	.macro	le64sym, sym
+	.long	\sym\()_lo32
+	.long	\sym\()_hi32
+	.endm
+
+	.macro linux_image_header entry
+	/*
+	 * DO NOT MODIFY. Image header expected by Linux boot-loaders.
+	 */
+	b	\entry
+	.long	0				/* reserved */
+	le64sym	_kernel_offset_le		/* Image load offset from start of RAM, little-endian */
+	le64sym	_kernel_size_le			/* Effective size of kernel image, little-endian */
+	le64sym	_kernel_flags_le		/* Informative flags, little-endian */
+	.quad	0				/* reserved */
+	.quad	0				/* reserved */
+	.quad	0				/* reserved */
+	.ascii	"ARM\x64"			/* Magic number */
+	.long	0				/* reserved */
+	.endm
+#endif
+
+#if defined(CONFIG_LINUX_KRNL_HEADER_IMG) && !defined (CONFIG_POSITION_INDEPENDENT)
 _head:
-	mov x1,_start
-	b      _start
+	linux_image_header _start
 
 _stack_base:
 	.quad 0x0
 
 _stack_size:
 	.quad _stack_end
-	.quad 0
-	.quad 0
-	.quad 0
-	.quad 0
-	.ascii "ARM\x64"
-	.long 0
 
 .align 4
 #endif

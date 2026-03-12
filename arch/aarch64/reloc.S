@@ -7,23 +7,49 @@
 .extern _reloc_size
 .extern _start
 
+#ifdef CONFIG_LINUX_KRNL_HEADER_IMG
+	/*
+	 * Emit a 64-bit absolute little endian symbol reference in a way that
+	 * ensures that it will be resolved at build time, even when building a
+	 * PIE binary. This requires cooperation from the linker script, which
+	 * must emit the lo32/hi32 halves individually.
+	 */
+	.macro	le64sym, sym
+	.long	\sym\()_lo32
+	.long	\sym\()_hi32
+	.endm
+
+	.macro linux_image_header entry
+	/*
+	 * DO NOT MODIFY. Image header expected by Linux boot-loaders.
+	 */
+	b	\entry
+	.long	0				/* reserved */
+	le64sym	_kernel_offset_le		/* Image load offset from start of RAM, little-endian */
+	le64sym	_kernel_size_le			/* Effective size of kernel image, little-endian */
+	le64sym	_kernel_flags_le		/* Informative flags, little-endian */
+	.quad	0				/* reserved */
+	.quad	0				/* reserved */
+	.quad	0				/* reserved */
+	.ascii	"ARM\x64"			/* Magic number */
+	.long	0				/* reserved */
+	.endm
+#endif
+
 ENTRY_ALIAS(_head)
+#ifdef CONFIG_LINUX_KRNL_HEADER_IMG
+	linux_image_header _reloc_entry
+#else
 	adr	x1, _relocated_uni
 	b	 _reloc_entry
+#endif
 
 ENTRY_ALIAS(_rel_stack_base)
 	.quad _start
 
 ENTRY_ALIAS(_rel_stack_size)
 	.quad _reloc_size
-#ifdef CONFIG_LINUX_KRNL_HEADER_IMG
-	.quad 0
-	.quad 0
-	.quad 0
-	.quad 0
-	.ascii "ARM\x64"
-	.long 0
-#endif
+
 ENTRY_ALIAS( _reloc_entry)
 	adr	x4, _start
 	ldr	x5, _rel_stack_base

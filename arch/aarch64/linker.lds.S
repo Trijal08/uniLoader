@@ -2,6 +2,10 @@
 /*
  * Copyright (c) 2022, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
  */
+#ifdef CONFIG_LINUX_KRNL_HEADER_IMG
+#include "linux-kernel-image-header-vars.h"
+#endif
+
 ENTRY(
 #ifdef CONFIG_POSITION_INDEPENDENT
       _head
@@ -85,4 +89,5 @@ SECTIONS
 #ifdef CONFIG_POSITION_INDEPENDENT
 	_reloc_size = _reloc_end - _reloc_start;
 #endif
+	_end = .;
 }
