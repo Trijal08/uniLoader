@@ -29,7 +29,13 @@ void decon_init(void) {
     *(volatile uint32_t *)(DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x3061;
 }
 
-#ifdef CONFIG_EARLYCON
+<<<<<<< HEAD
+/* ================================================================
+ * =                                                              =
+ * = General specifications for each Pixel 9 series device target =
+ * =                                                              =
+ * ================================================================ /
+=======
 void uart_putc(char ch)
 {
 	volatile uint32_t *uart_base = (volatile uint32_t *)ZUMA_UART_BASE;
@@ -55,18 +61,16 @@ void uart_puts(const char *s)
 		s++;
 	}
 }
-#endif
 
-
-/* ================================================================
- * =                                                              =
- * = General specifications for each Pixel 9 series device target =
- * =                                                              =
- * ================================================================ */
+/*
+ *
+ * General specifications for each Pixel 9 series device target
+ *
+ */
+>>>>>>> ce7a58b (board: zuma: Add full UART support)
 #ifdef CONFIG_GOOGLE_KOMODO
 #define FRAMEBUFFER_WIDTH 1344
 #define FRAMEBUFFER_HEIGHT 2992
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-komodo"
 #endif
@@ -74,7 +78,6 @@ void uart_puts(const char *s)
 #ifdef CONFIG_GOOGLE_CAIMAN
 #define FRAMEBUFFER_WIDTH 1280
 #define FRAMEBUFFER_HEIGHT 2856
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-caiman"
 #endif
@@ -82,7 +85,6 @@ void uart_puts(const char *s)
 #ifdef CONFIG_GOOGLE_TOKAY
 #define FRAMEBUFFER_WIDTH 1080
 #define FRAMEBUFFER_HEIGHT 2424
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-tokay"
 #endif
@@ -90,7 +92,6 @@ void uart_puts(const char *s)
 #ifdef CONFIG_GOOGLE_TEGU
 #define FRAMEBUFFER_WIDTH 1080
 #define FRAMEBUFFER_HEIGHT 2424
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-tegu"
 #endif
@@ -98,7 +99,6 @@ void uart_puts(const char *s)
 #ifdef CONFIG_GOOGLE_COMET
 #define FRAMEBUFFER_WIDTH 2076
 #define FRAMEBUFFER_HEIGHT 2152
-#define FRAMEBUFFER_SCALE 3
 
 #define BOARD_NAME "google-comet"
 #endif
@@ -107,11 +107,10 @@ void uart_puts(const char *s)
  * =                                                              =
  * = General specifications for each Pixel 8 series device target =
  * =                                                              =
- * ================================================================ */
+ * ================================================================ /
 #ifdef CONFIG_GOOGLE_HUSKY
 #define FRAMEBUFFER_WIDTH 1344
 #define FRAMEBUFFER_HEIGHT 2992
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-husky"
 #endif
@@ -119,7 +118,6 @@ void uart_puts(const char *s)
 #ifdef CONFIG_GOOGLE_SHIBA
 #define FRAMEBUFFER_WIDTH 1080
 #define FRAMEBUFFER_HEIGHT 2400
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-shiba"
 #endif
@@ -127,9 +125,15 @@ void uart_puts(const char *s)
 #ifdef CONFIG_GOOGLE_AKITA
 #define FRAMEBUFFER_WIDTH 1080
 #define FRAMEBUFFER_HEIGHT 2400
-#define FRAMEBUFFER_SCALE 2
 
 #define BOARD_NAME "google-akita"
+#endif
+
+#ifdef CONFIG_GOOGLE_FELIX
+#define FRAMEBUFFER_WIDTH 1840
+#define FRAMEBUFFER_HEIGHT 2208
+
+#define BOARD_NAME "google-felix"
 #endif
 
 #endif // ZUMA_H_
