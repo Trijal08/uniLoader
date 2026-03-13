@@ -9,9 +9,45 @@
 #define DECON_F_BASE		0x19470000
 #define HW_SW_TRIG_CONTROL	0x30
 
+#define ZUMA_UART_BASE		0x10870000
+#define ZUMA_UART_UFCON		0x08
+#define ZUMA_UART_UTRSTAT	0x10
+#define ZUMA_UART_UFSTAT	0x18
+#define ZUMA_UART_UTXH		0x20
+
+#define ZUMA_UART_UFCON_FIFOMODE	(1 << 0)
+#define ZUMA_UART_UTRSTAT_TXFE		(1 << 1)
+#define ZUMA_UART_UFSTAT_TXFULL		(1 << 24)
+
 void decon_init(void) {
     /* Allow framebuffer to be written to */
     *(int*) (DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x3061;
+}
+
+void uart_putc(char ch)
+{
+	volatile uint32_t *uart_base = (volatile uint32_t *)ZUMA_UART_BASE;
+
+	if (readl(uart_base + (ZUMA_UART_UFCON / sizeof(*uart_base))) &
+	    ZUMA_UART_UFCON_FIFOMODE) {
+		while (readl(uart_base + (ZUMA_UART_UFSTAT / sizeof(*uart_base))) &
+		       ZUMA_UART_UFSTAT_TXFULL)
+			;
+	} else {
+		while (!(readl(uart_base + (ZUMA_UART_UTRSTAT / sizeof(*uart_base))) &
+			 ZUMA_UART_UTRSTAT_TXFE))
+			;
+	}
+
+	writel((unsigned int)ch, (void *)(ZUMA_UART_BASE + ZUMA_UART_UTXH));
+}
+
+void uart_puts(const char *s)
+{
+	while (*s != '\0') {
+		uart_putc(*s);
+		s++;
+	}
 }
 
 /*
