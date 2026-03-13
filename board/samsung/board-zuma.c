@@ -15,6 +15,7 @@ int zuma_init(void)
 #ifdef CONFIG_SIMPLE_FB
 	decon_init();
 #endif
+	zuma_pet_wdt();
 	return 0;
 }
 
