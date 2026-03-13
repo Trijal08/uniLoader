@@ -19,6 +19,18 @@
 #define ZUMA_UART_UTRSTAT_TXFE		(1 << 1)
 #define ZUMA_UART_UFSTAT_TXFULL		(1 << 24)
 
+#define ZUMA_WDT_BASE			0x10060000
+#define ZUMA_WDT_WTCON			0x00
+#define ZUMA_WDT_WTDAT			0x04
+#define ZUMA_WDT_WTCNT			0x08
+#define ZUMA_WDT_WTCLRINT		0x0c
+
+#define ZUMA_WDT_WTCON_ENABLE		(1 << 5)
+
+#define ZUMA_PMU_BASE			0x15460000
+#define ZUMA_PMU_CLUSTER0_NONCPU_OUT	0x1220
+#define ZUMA_PMU_WDT_CNT_EN		(1 << 8)
+
 void decon_init(void) {
     /* Allow framebuffer to be written to */
     *(int*) (DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x3061;
@@ -48,6 +60,26 @@ void uart_puts(const char *s)
 		uart_putc(*s);
 		s++;
 	}
+}
+
+void zuma_pet_wdt(void)
+{
+	uint32_t wtcon;
+	uint32_t count;
+	uint32_t pmu_reg;
+
+	wtcon = readl((volatile uint32_t *)(ZUMA_WDT_BASE + ZUMA_WDT_WTCON));
+	if (!(wtcon & ZUMA_WDT_WTCON_ENABLE))
+		return;
+
+	pmu_reg = readl((volatile uint32_t *)(ZUMA_PMU_BASE +
+					      ZUMA_PMU_CLUSTER0_NONCPU_OUT));
+	pmu_reg |= ZUMA_PMU_WDT_CNT_EN;
+	writel(pmu_reg, (void *)(ZUMA_PMU_BASE + ZUMA_PMU_CLUSTER0_NONCPU_OUT));
+
+	count = readl((volatile uint32_t *)(ZUMA_WDT_BASE + ZUMA_WDT_WTDAT));
+	writel(count, (void *)(ZUMA_WDT_BASE + ZUMA_WDT_WTCNT));
+	writel(1, (void *)(ZUMA_WDT_BASE + ZUMA_WDT_WTCLRINT));
 }
 
 /*
