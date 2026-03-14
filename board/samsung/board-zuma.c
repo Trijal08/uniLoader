@@ -28,7 +28,7 @@
 int zuma_init(void)
 {
 	decon_init();
-	zuma_pet_wdt();
+	zuma_disable_wdt();
 	return 0;
 }
 

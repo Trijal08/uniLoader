@@ -62,24 +62,17 @@ void uart_puts(const char *s)
 	}
 }
 
-void zuma_pet_wdt(void)
+void zuma_disable_wdt(void)
 {
-	uint32_t wtcon;
-	uint32_t count;
-	uint32_t pmu_reg;
-
-	wtcon = readl((volatile uint32_t *)(ZUMA_WDT_BASE + ZUMA_WDT_WTCON));
-	if (!(wtcon & ZUMA_WDT_WTCON_ENABLE))
-		return;
-
-	pmu_reg = readl((volatile uint32_t *)(ZUMA_PMU_BASE +
-					      ZUMA_PMU_CLUSTER0_NONCPU_OUT));
-	pmu_reg |= ZUMA_PMU_WDT_CNT_EN;
-	writel(pmu_reg, (void *)(ZUMA_PMU_BASE + ZUMA_PMU_CLUSTER0_NONCPU_OUT));
-
-	count = readl((volatile uint32_t *)(ZUMA_WDT_BASE + ZUMA_WDT_WTDAT));
-	writel(count, (void *)(ZUMA_WDT_BASE + ZUMA_WDT_WTCNT));
-	writel(1, (void *)(ZUMA_WDT_BASE + ZUMA_WDT_WTCLRINT));
+	/* Disable watchdogs for cluster 0 and 1 */
+	/* watchdog_cl0 */
+	volatile int val = *(int*)(0x10060000 + 0x00);
+	val &= ~((1 << 5) | (1 << 2));
+	*(int*)(0x10060000) = val;
+	/* watchdog_cl1 */
+	val = *(int*)(0x10070000 + 0x00);
+	val &= ~((1 << 5) | (1 << 2));
+	*(int*)(0x10070000) = val;
 }
 
 /*
