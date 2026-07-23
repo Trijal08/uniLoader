@@ -45,6 +45,8 @@ void boot_kernel(void* dt, void* kernel, void* ramdisk)
 	}
 #endif
 
+	INITCALL(board_ops.ops.exit);
+
 #ifdef CONFIG_LIBFDT
 	patch_dtb(&dt);
 #endif

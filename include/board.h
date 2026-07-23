@@ -12,6 +12,7 @@
 struct board_ops {
 	int (*early_init)(void);
 	int (*late_init)(void);
+	int (*exit)(void);
 };
 
 struct board_data {
