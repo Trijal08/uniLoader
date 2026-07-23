@@ -25,4 +25,15 @@ menu "Libraries"
 		depends on LIBFDT
 		help
 		  This option specifies the size (in bytes) of the buffer used for DTB modifying. The default value of 500 KB should be sufficient even for downstream device trees.
+
+	config REDOX_BOOT
+		bool "Support booting the Redox microkernel (AArch64)"
+		default n
+		select LIBFDT
+		help
+		  Say Y to let uniLoader boot a Redox kernel in addition to
+		  Linux. uniLoader detects the embedded kernel by magic: a Redox
+		  ELF gets the KernelArgs/page-table/framebuffer handoff and is
+		  entered with the MMU on; an arm64 Image takes the normal Linux
+		  path. AArch64 only.
 endmenu
