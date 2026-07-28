@@ -66,7 +66,7 @@ SECTIONS
 		*(.data.*)
 	}
 
-	.bss ALIGN(8) : {
+	.bss ALIGN(4096) : {
 		__bss_start = .;
 		*(.bss)
 		*(.bss.*)
