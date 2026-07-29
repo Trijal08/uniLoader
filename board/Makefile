@@ -40,6 +40,7 @@ lib-$(CONFIG_SAMSUNG_STARLTE) += samsung/board-starlte.o
 lib-$(CONFIG_SAMSUNG_X1S) += samsung/board-x1s.o
 lib-$(CONFIG_SAMSUNG_ZEROFLTE) += samsung/board-zeroflte.o
 lib-$(CONFIG_EXYNOS_GOOGLE_ZUMA) += samsung/board-zuma.o
+lib-$(CONFIG_EXYNOS_GOOGLE_GS201) += samsung/board-gs201.o
 lib-$(CONFIG_SONY_LILAC) += sony/board-lilac.o
 lib-$(CONFIG_SONY_PDX245) += sony/board-pdx245.o
 lib-$(CONFIG_SONY_PSVITA) += sony/board-vita.o

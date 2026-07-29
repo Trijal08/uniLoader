@@ -83,6 +83,38 @@ menu "Device Support"
 
 	endchoice
 
+	choice GOOGLE_PANTAH
+		prompt "Support for Pixel 7 series"
+		depends on EXYNOS_GOOGLE_GS201
+		default GOOGLE_CHEETAH
+
+	config GOOGLE_CHEETAH
+		bool "Support for Google Pixel 7 Pro"
+		help
+		  Say Y if you want to include support for Pixel 7 Pro
+
+	config GOOGLE_PANTHER
+		bool "Support for Google Pixel 7"
+		help
+		  Say Y if you want to include support for Pixel 7
+
+	config GOOGLE_LYNX
+		bool "Support for Google Pixel 7a"
+		help
+		  Say Y if you want to include support for Pixel 7a
+
+	config GOOGLE_FELIX
+		bool "Support for Google Pixel Fold"
+		help
+		  Say Y if you want to include support for Pixel Fold
+
+	config GOOGLE_TANGORPRO
+		bool "Support for Google Pixel Tablet"
+		help
+		  Say Y if you want to include support for Pixel Tablet
+
+	endchoice
+
 	config HUAWEI_AGASSI2
 		bool "Support for Huawei Mediapad T5"
 		default n

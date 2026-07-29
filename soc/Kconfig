@@ -135,6 +135,12 @@ config SONY
 		help
 		  Say Y if your device uses Google Tensor G3 or G4 SoC
 
+	config EXYNOS_GOOGLE_GS201
+		bool "Support for Google Tensor G2"
+		select EXYNOS
+		help
+		  Say Y if your device uses Google Tensor G2 SoC
+
 	config HI6250
 		bool "Support for HiSilicon Hi6250"
 		select HISILICON
