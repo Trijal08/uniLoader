@@ -51,5 +51,6 @@ lib-$(CONFIG_XIAOMI_BLOSSOM) += xiaomi/board-blossom.o
 lib-$(CONFIG_XIAOMI_CAMELLIA) += xiaomi/board-camellia.o
 lib-$(CONFIG_XIAOMI_GINKGO) += xiaomi/board-ginkgo.o
 lib-$(CONFIG_XIAOMI_MOON) += xiaomi/board-moon.o
+lib-$(CONFIG_XIAOMI_SKY) += xiaomi/board-sky.o
 lib-$(CONFIG_XIAOMI_NEZHA) += xiaomi/board-nezha.o
 lib-$(CONFIG_ZTE_PINE) += zte/board-pine.o

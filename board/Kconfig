@@ -463,6 +463,13 @@ menu "Device Support"
 		  Say Y if you want to include support for Xiaomi Moon devices:
 		  Xiaomi Poco M6 4G, Xiaomi Redmi 13 4G.
 
+	config XIAOMI_SKY
+		bool "Support for Xiaomi Redmi 12 5G"
+		default n
+		depends on SM4450
+		help
+		  Say Y if you want to include support for Xiaomi Redmi 12 5G
+
 	config XIAOMI_NEZHA
 		bool "Support for Xiaomi 17 Ultra"
 		default n

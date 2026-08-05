@@ -219,6 +219,12 @@ config SONY
 		help
 		  Say Y if your device uses this Qualcomm SoC
 
+	config SM4450
+		bool "Support for QUALCOMM SM4450"
+		select QUALCOMM
+		help
+		 Say Y if your device uses this Qualcomm Snapdragon 4 Gen 2 SoC
+
 	config SM6125
 		bool "Support for QUALCOMM SM6125"
 		select QUALCOMM
