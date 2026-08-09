@@ -13,6 +13,11 @@ extern unsigned long ramdisk_size;
 #ifdef __aarch64__
 extern void load_kernel_and_jump(void* dtb, void* x1, void* x2, void* x3,
                                  void* kernel);
+/* Exception-level helpers (arch/aarch64/start.S). */
+unsigned int arch_current_el(void);
+unsigned int arch_el2_implemented(void);
+void arch_el3_to_el2(void);
+void arch_el3_to_el1(void);
 #elif __arm__
 extern void load_kernel_and_jump(unsigned int r0, unsigned int r1,
                                  void* dtb_addr, void* kernel_entry);

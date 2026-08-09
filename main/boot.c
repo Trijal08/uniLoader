@@ -27,6 +27,23 @@ static bool is_linux_image(const void *kernel)
 
 void boot_kernel(void* dt, void* kernel, void* ramdisk)
 {
+#ifdef __aarch64__
+	/* checkm8/pongoOS 'bootr' hands off at EL3, but a Linux (or Redox)
+	 * kernel must be entered at EL2/EL1. Prefer EL2 (needed for KVM); fall
+	 * back to EL1 when the SoC has no EL2 (e.g. Apple A9/s8003). On boards
+	 * entered at EL2/EL1 by their vendor bootloader this is a no-op, so
+	 * nothing is printed there. */
+	if (arch_current_el() == 3) {
+		if (arch_el2_implemented()) {
+			printk(KERN_INFO, "EL3 detected, dropping to EL2 before handoff\n");
+			arch_el3_to_el2();
+		} else {
+			printk(KERN_INFO, "EL3 detected (no EL2), dropping to EL1 before handoff\n");
+			arch_el3_to_el1();
+		}
+	}
+#endif
+
 	printk(KERN_INFO, "Booting kernel...\n");
 
 #ifdef CONFIG_REDOX_BOOT
