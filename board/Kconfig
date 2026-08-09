@@ -22,6 +22,13 @@ menu "Device Support"
 		help
 		  Say Y if you want to include support for iPhone 6
 
+	config APPLE_N69
+		bool "Support for Apple iPhone SE (1st generation)"
+		default n
+		depends on APPLE_S8003
+		help
+		  Say Y if you want to include support for iPhone SE (1st generation)
+
 	config BLACKVIEW_TAB15PRO
 		bool "Support for Blackview Tab 15 Pro"
 		default n

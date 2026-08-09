@@ -33,6 +33,12 @@ config SONY
  choice
 	prompt "SoC Support"
 
+	config APPLE_S8003
+		bool "Support for Apple S8003"
+		select APPLE_SILICON
+		help
+		  Say Y if your device uses Apple S8003 SoC
+
 	config APPLE_T7000
 		bool "Support for Apple T7000"
 		select APPLE_SILICON
