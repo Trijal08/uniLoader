@@ -93,7 +93,7 @@ SECTIONS
 	_reloc_size = _reloc_end - _reloc_start;
 #endif
 #ifdef CONFIG_LINUX_KRNL_HEADER_IMG
-	_kernel_size = _stack_end - _start;
+	_kernel_size = _stack_end - ADDR(.text);
 #endif
 
 	/* size optimization for flat binaries */
